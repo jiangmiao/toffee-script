@@ -25,7 +25,7 @@ Installation
 
 Named Function
 --------------
-ToffeeScript support named function which is differenc from CoffeeScript.
+ToffeeScript support named function which is different from CoffeeScript.
 if the function defined in the first level of code block and the function name haven't been used, then compile it as named function. see Code Examples section
 It won't have compatible issue with CoffeeScript except one case
 
