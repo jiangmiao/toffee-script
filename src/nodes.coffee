@@ -2912,6 +2912,25 @@ exports.Code = class Code extends Base
 
     seenSuper
 
+exports.PromiseCode = class PromiseCode extends Base
+  constructor: (@params, @body, @funcGlyph, @paramStart) ->
+    super()
+
+  compileNode: (o) ->
+    params = [
+       new Param(new Literal "resolve")
+       new Param(new Literal "reject")
+    ]
+    promise = new Op "new", new Call(new Literal("Promise"), [
+      new Code(params, @body, @funcGlyph, @paramStart),
+    ])
+    new Code(
+      @params,
+      Block.wrap([promise]),
+      @funcGlyph,
+      @paramStart,
+    ).compileToFragments(o)
+
 #### Param
 
 # A parameter in a function definition. Beyond a typical JavaScript parameter,

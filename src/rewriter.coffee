@@ -47,6 +47,7 @@ exports.Rewriter = class Rewriter
     if process?.env?.DEBUG_TOKEN_STREAM
       console.log 'Initial token stream:' if process.env.DEBUG_REWRITTEN_TOKEN_STREAM
       console.log (t[0] + '/' + t[1] + (if t.comments then '*' else '') for t in @tokens).join ' '
+    # @rewritePromise()
     @removeLeadingNewlines()
     @closeOpenCalls()
     @closeOpenIndexes()
@@ -683,14 +684,16 @@ exports.Rewriter = class Rewriter
       if token[0] in ['IDENTIFIER', 'PROPERTY'] && token[1].slice(-1) == '!'
         line = token[2]
         token[1] = token[1].slice(0,-1)
-        tag_async = ['ASYNC', 'async', line]
-        tag_cs = ['CALL_START', '(', line]
-        tag_ce = ['CALL_END', ')', line]
+        if tokens[0]?[0] == '='
+          dest.push token
+          dest.push tokens.shift()
+          dest.push ['PROMISE', 'promise', line]
+          continue
         dest.push token
-        dest.push tag_async
+        dest.push ['ASYNC', 'async', line]
         if tokens[0]?[0] != 'CALL_START'
-          dest.push tag_cs
-          dest.push tag_ce
+          dest.push ['CALL_START', '(', line]
+          dest.push ['CALL_END', ')', line]
       else
         dest.push token
     @tokens = dest

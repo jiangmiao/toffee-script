@@ -277,6 +277,8 @@ grammar =
   Code: [
     o 'PARAM_START ParamList PARAM_END FuncGlyph Block', -> new Code $2, $5, $4, LOC(1)(new Literal $1)
     o 'FuncGlyph Block',                                 -> new Code [], $2, $1
+    o 'PROMISE PARAM_START ParamList PARAM_END FuncGlyph Block', -> new PromiseCode $3, $6, $5, LOC(1)(new Literal $2)
+    o 'PROMISE FuncGlyph Block',                                 -> new PromiseCode [], $3, $2
   ]
 
   # The Codeline is the **Code** node with **Line** instead of indented **Block**.
