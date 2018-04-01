@@ -482,6 +482,7 @@ grammar =
   Invocation: [
     o 'Value OptFuncExist String',              -> new TaggedTemplateCall $1, $3, $2
     o 'Value OptFuncExist Arguments',           -> new Call $1, $3, $2
+    o 'Value ASYNC OptFuncExist Arguments',     -> new Op 'await', new Call($1, $4, $3)
     o 'SUPER OptFuncExist Arguments',           -> new SuperCall LOC(1)(new Super), $3, $2, $1
   ]
 
