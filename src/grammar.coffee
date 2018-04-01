@@ -81,6 +81,8 @@ grammar =
   Body: [
     o 'Line',                                   -> Block.wrap [$1]
     o 'Body TERMINATOR Line',                   -> $1.push $3
+    o 'SimpleAssign',                           -> Block.wrap [$1]
+    o 'Body TERMINATOR SimpleAssign',           -> $1.push $3
     o 'Body TERMINATOR'
   ]
 
@@ -336,6 +338,15 @@ grammar =
     o 'Value Accessor',                         -> $1.add $2
     o 'Code Accessor',                          -> new Value($1).add $2
     o 'ThisProperty'
+  ]
+
+  SimpleAssignableList: [
+    o 'SimpleAssignable , SimpleAssignable',     -> [$1, $3]
+    o 'SimpleAssignableList , SimpleAssignable', -> $1.concat $3
+  ]
+
+  SimpleAssign: [
+    o 'SimpleAssignableList = Expression',       -> new Assign new Value(new Arr($1)), $3
   ]
 
   # Everything that can be assigned to.
