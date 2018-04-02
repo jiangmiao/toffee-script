@@ -825,7 +825,10 @@ exports.Return = class Return extends Base
     # get back different results!
     if @expression
       answer = @expression.compileToFragments o, LEVEL_PAREN
-      unshiftAfterComments answer, @makeCode "#{@tab}return "
+      rt = "return "
+      if o.scope.promise
+        rt = ""
+      unshiftAfterComments answer, @makeCode "#{@tab}#{rt}"
       # Since the `return` got indented by `@tab`, preceding comments that are
       # multiline need to be indented.
       for fragment in answer
@@ -2922,6 +2925,7 @@ exports.PromiseBlock = class PromiseBlock extends Block
 
 exports.PromiseCode = class PromiseCode extends Code
   constructor: ({params, body, funcGlyph, paramStart}) ->
+    body = new PromiseBlock([body])
     super(
       params,
       Block.wrap([
