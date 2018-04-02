@@ -1,62 +1,55 @@
-                                               @@@@@@@                @@@@  @@@@@
-                    {                         @@@@@@@@@@              @@@   @@@
-                 }   }   {                   @@@@     @@              @@@   @@@
-                {   {  }  }                 @@@@          @@@@@@@    @@@   @@@     @@@@@@    @@@@@@
-                 }   }{  {                 @@@@          @@@   @@  @@@@@  @@@@@@  @@@   @@  @@@@  @@
-                {  }{  }  }                @@@@         @@@@   @@   @@@    @@@   @@@   @@@ @@@   @@@
-               { }{ }{  { }                @@@@        @@@@    @@   @@@    @@@   @@@@@@@@  @@@@@@@@
-             {  { } { } { }  }             @@@@@       @@@@   @@    @@@    @@@   @@@       @@@
-              { }   { }   { }               @@@@@@@@@@ @@@@@@@@    @@@    @@@    @@@@@@@@  @@@@@@@@
-       @@@@@@   { }   { }    @@@@@@@           @@@@@               @@@    @@@      @@@@@     @@@@@
-       @@@@@@@@@@@@@@@@@@@@@@@@@@@@                               @@@    @@@
-     @@ @@@@@@@@@@@@@@@@@@@@@@@@@@             @@@@@@            @@@    @@@
-    @@   @@@@@@@@@@@@@@@@@@@@@@@@           @@@@    @@          @@@   @@@@
-    @@@   @@@@@@@@@@@@@@@@@@@@@             @@@@   @@@                       @@                  @@@@
-     @@@    @@@@@@@@@@@@@@@@@@              @@@@@          @@@@@   @@  @@   @@@     @@@@@@@     @@@@@
-       @@@   @@@@@@@@@@@@@@@@                 @@@@@      @@@  @@@ @@@@@@@@         @@@@  @@@@  @@@@@@@
-              @@@@@@@@@@@@@@                    @@@@@   @@@       @@@@     @@@@    @@@    @@@   @@@
-                                          @@@@@  @@@@  @@@@      @@@@      @@@@   @@@@   @@@@  @@@@
-                                         @@@     @@@@  @@@       @@@@     @@@@    @@@    @@@@  @@@@
-                                         @@@     @@@@  @@@@     @@@@      @@@@   @@@@   @@@@  @@@@
-                                          @@@@@@@@@     @@@@@@  @@@@       @@@@  @@@@@@@@@    @@@@
-                                                                                 @@@          @@@@
-                                                                                @@@
-                                                                                @@@
+## ToffeeScript
 
-CoffeeScript is a little language that compiles into JavaScript.
+ToffeeScript is a CoffeeScript dialect with Asynchronous Grammar
 
-## Installation
+ToffeeScript v1 provide easy way to handle callback, but there are some limitation, eg exception handling.
+And now there is a new modern native way to handle asynchronous function.
 
-Once you have Node.js installed:
+The grammar is different from v1 to v2, so ToffeeScript v2 is **NOT** compatible with v1.
+It is base on CoffeeScript v2 which support await/async. 
 
-```shell
-npm install --global coffeescript
+
+### Features
+
+1. Quick define a Promise object
+2. Short way to write await
+
+### Example
+
+ToffeeScript source code
+```coffeescript
+# create Promise
+sleep! = (ms) ->
+    setTimeout resolve, ms
+
+countdown = (n) ->
+    while n--
+        console.log n
+        # shortcut for await
+        sleep! 1000
+    0
+
+countdown 3
 ```
+generated JavaScript code
+```javascript
+// create Promise
+var countdown, sleep;
 
-Leave off the `--global` if you don’t wish to install globally.
+sleep = function(ms) {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, ms);
+  });
+};
 
-## Getting Started
+countdown = async function(n) {
+  while (n--) {
+    console.log(n);
+    // shortcut for await
+    await sleep(1000);
+  }
+  return 0;
+};
 
-Execute a script:
-
-```shell
-coffee /path/to/script.coffee
+countdown(3);
 ```
-
-Compile a script:
-
-```shell
-coffee -c /path/to/script.coffee
-```
-
-For documentation, usage, and examples, see: http://coffeescript.org/
-
-To suggest a feature or report a bug: https://github.com/jashkenas/coffeescript/issues
-
-If you’d like to chat, drop by #coffeescript on Freenode IRC.
-
-The source repository: https://github.com/jashkenas/coffeescript.git
-
-Changelog: http://coffeescript.org/#changelog
-
-Our lovely and talented contributors are listed here: https://github.com/jashkenas/coffeescript/contributors
