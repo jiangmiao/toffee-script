@@ -5,9 +5,8 @@ ToffeeScript is a CoffeeScript dialect with Asynchronous Grammar
 ToffeeScript v1 provide easy way to handle callback, but there are some limitation, eg exception handling.
 And now there is a new modern native way to handle asynchronous function.
 
-The grammar is different from v1 to v2, so ToffeeScript v2 is **NOT** compatible with v1.
+The grammar is different from v1 to v2, so ToffeeScript v2 is not compatible with v1.
 It is base on CoffeeScript v2 which support await/async. 
-
 
 ### Features
 
