@@ -25,19 +25,19 @@ hidden = (file) -> /^\.|~$/.test file
 
 # The help banner that is printed in conjunction with `-h`/`--help`.
 BANNER = '''
-  Usage: coffee [options] path/to/script.coffee [args]
+  Usage: toffee [options] path/to/script.toffee [args]
 
-  If called without options, `coffee` will run your script.
+  If called without options, `toffee` will run your script.
 '''
 
-# The list of all the valid option flags that `coffee` knows how to handle.
+# The list of all the valid option flags that `toffee` knows how to handle.
 SWITCHES = [
   ['-b', '--bare',              'compile without a top-level function wrapper']
   ['-c', '--compile',           'compile to JavaScript and save as .js files']
   ['-e', '--eval',              'pass a string from the command line as input']
   ['-h', '--help',              'display this help message']
-  ['-i', '--interactive',       'run an interactive CoffeeScript REPL']
-  ['-j', '--join [FILE]',       'concatenate the source CoffeeScript before compiling']
+  ['-i', '--interactive',       'run an interactive ToffeeScript REPL']
+  ['-j', '--join [FILE]',       'concatenate the source ToffeeScript before compiling']
   ['-m', '--map',               'generate source map and save as .js.map files']
   ['-M', '--inline-map',        'generate source map and include it directly in output']
   ['-n', '--nodes',             'print out the parse tree that the parser produces']
@@ -47,7 +47,7 @@ SWITCHES = [
   ['-p', '--print',             'print out the compiled JavaScript']
   ['-r', '--require [MODULE*]', 'require the given module before eval or REPL']
   ['-s', '--stdio',             'listen for and compile scripts over stdio']
-  ['-l', '--literate',          'treat stdio as literate style coffeescript']
+  ['-l', '--literate',          'treat stdio as literate style toffeescript']
   ['-t', '--transpile',         'pipe generated JavaScript through Babel']
   [      '--tokens',            'print out the tokens that the lexer/rewriter produce']
   ['-v', '--version',           'display the version number']
@@ -77,7 +77,7 @@ exports.run = ->
 
   if (not opts.doubleDashed) and (opts.arguments[1] is '--')
     printWarn '''
-      coffee was invoked with '--' as the second positional argument, which is
+      toffee was invoked with '--' as the second positional argument, which is
       now deprecated. To pass '--' as an argument to a script to run, put an
       additional '--' before the path to your script.
 
@@ -102,7 +102,7 @@ exports.run = ->
   return require('./repl').start(replCliOpts)   unless opts.arguments.length
   literals = if opts.run then opts.arguments.splice 1 else []
   process.argv = process.argv[0..1].concat literals
-  process.argv[0] = 'coffee'
+  process.argv[0] = 'toffee'
 
   if opts.output
     outputBasename = path.basename opts.output
@@ -126,11 +126,11 @@ exports.run = ->
     If for some reason it's necessary to share local variables between files,
     replace...
 
-        $ coffee --compile --join bundle.js -- a.coffee b.coffee c.coffee
+        $ toffee --compile --join bundle.js -- a.toffee b.toffee c.toffee
 
     with...
 
-        $ cat a.coffee b.coffee c.coffee | coffee --compile --stdio > bundle.js
+        $ cat a.toffee b.toffee c.toffee | toffee --compile --stdio > bundle.js
 
     '''
   for source in opts.arguments
@@ -540,4 +540,4 @@ usage = ->
 
 # Print the `--version` message and exit.
 version = ->
-  printLine "CoffeeScript version #{CoffeeScript.VERSION}"
+  printLine "ToffeeScript version #{CoffeeScript.VERSION}"

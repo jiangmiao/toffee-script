@@ -1,17 +1,18 @@
 {
-  "name": "coffeescript",
-  "description": "Unfancy JavaScript",
+  "name": "toffeescript",
+  "description":  "CoffeeScript with asynchronous syntax",
   "keywords": [
     "javascript",
     "language",
     "coffeescript",
+    "toffeescript",
     "compiler"
   ],
-  "author": "Jeremy Ashkenas",
+  "author": "Jiang Miao",
   "version": "2.2.4",
   "license": "MIT",
   "engines": {
-    "node": ">=6"
+    "node": ">=8"
   },
   "directories": {
     "lib": "./lib/coffeescript"
@@ -19,8 +20,8 @@
   "main": "./lib/coffeescript/index",
   "browser": "./lib/coffeescript/browser",
   "bin": {
-    "coffee": "./bin/coffee",
-    "cake": "./bin/cake"
+    "toffee": "./bin/coffee",
+    "tcons": "./bin/cake"
   },
   "files": [
     "bin",
@@ -32,11 +33,11 @@
     "test": "node ./bin/cake test",
     "test-harmony": "node --harmony ./bin/cake test"
   },
-  "homepage": "http://coffeescript.org",
-  "bugs": "https://github.com/jashkenas/coffeescript/issues",
-  "repository": {
+  "homepage":     "https://github.com/jiangmiao/toffeescript",
+  "bugs":         "https://github.com/jiangmiao/toffeescript/issues",
+  "repository":   {
     "type": "git",
-    "url": "git://github.com/jashkenas/coffeescript.git"
+    "url": "https://github.com/jiangmiao/toffeescript"
   },
   "devDependencies": {
     "babel-core": "~6.26.0",
