@@ -2912,24 +2912,29 @@ exports.Code = class Code extends Base
 
     seenSuper
 
-exports.PromiseCode = class PromiseCode extends Base
-  constructor: (@params, @body, @funcGlyph, @paramStart) ->
-    super()
+exports.PromiseBlock = class PromiseBlock extends Block
+  constructor: (nodes) ->
+    super(nodes)
 
   compileNode: (o) ->
-    params = [
-       new Param(new Literal "resolve")
-       new Param(new Literal "reject")
-    ]
-    promise = new Op "new", new Call(new Literal("Promise"), [
-      new Code(params, @body, @funcGlyph, @paramStart),
-    ])
-    new Code(
-      @params,
-      Block.wrap([promise]),
-      @funcGlyph,
-      @paramStart,
-    ).compileToFragments(o)
+    o.scope.promise = true
+    super(o)
+
+exports.PromiseCode = class PromiseCode extends Code
+  constructor: ({params, body, funcGlyph, paramStart}) ->
+    super(
+      params,
+      Block.wrap([
+        new Op "new", new Call(new Literal("Promise"), [
+          new Code([
+            new Param(new Literal "resolve")
+            new Param(new Literal "reject")
+          ], body, new FuncGlyph("=>"), paramStart),
+        ])
+      ]),
+      funcGlyph,
+      paramStart,
+    )
 
 #### Param
 

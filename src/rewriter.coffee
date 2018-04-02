@@ -684,7 +684,7 @@ exports.Rewriter = class Rewriter
       if token[0] in ['IDENTIFIER', 'PROPERTY'] && token[1].slice(-1) == '!'
         line = token[2]
         token[1] = token[1].slice(0,-1)
-        if tokens[0]?[0] == '='
+        if tokens[0]?[0] in ['=', ':']
           dest.push token
           dest.push tokens.shift()
           dest.push ['PROMISE', 'promise', line]

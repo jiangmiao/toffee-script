@@ -116,6 +116,7 @@ grammar =
   Expression: [
     o 'Value'
     o 'Code'
+    o 'PromiseCode'
     o 'Operation'
     o 'Assign'
     o 'If'
@@ -133,6 +134,7 @@ grammar =
   # `for x in do (obj) -> f obj when x > 8 then f x`
   ExpressionLine: [
     o 'CodeLine'
+    o 'PromiseCodeLine'
     o 'IfLine'
     o 'OperationLine'
   ]
@@ -277,8 +279,6 @@ grammar =
   Code: [
     o 'PARAM_START ParamList PARAM_END FuncGlyph Block', -> new Code $2, $5, $4, LOC(1)(new Literal $1)
     o 'FuncGlyph Block',                                 -> new Code [], $2, $1
-    o 'PROMISE PARAM_START ParamList PARAM_END FuncGlyph Block', -> new PromiseCode $3, $6, $5, LOC(1)(new Literal $2)
-    o 'PROMISE FuncGlyph Block',                                 -> new PromiseCode [], $3, $2
   ]
 
   # The Codeline is the **Code** node with **Line** instead of indented **Block**.
@@ -286,6 +286,15 @@ grammar =
     o 'PARAM_START ParamList PARAM_END FuncGlyph Line', -> new Code $2, LOC(5)(Block.wrap [$5]), $4,
                                                               LOC(1)(new Literal $1)
     o 'FuncGlyph Line',                                 -> new Code [], LOC(2)(Block.wrap [$2]), $1
+  ]
+
+  # Promise
+  PromiseCode: [
+    o 'PROMISE Code',                           -> new PromiseCode($2)
+  ]
+
+  PromiseCodeLine: [
+    o 'PROMISE CodeLine',                       -> new PromiseCode($2)
   ]
 
   # CoffeeScript has two different symbols for functions. `->` is for ordinary
