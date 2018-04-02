@@ -484,33 +484,32 @@ describe 'while', ->
 				a = for v in vs
 						x!
 		""", """
-			(function(autocb) {
-			  var a, b, v, _$res$_1, _i, _len,
-				_this = this;
-			  _$res$_1 = [];
-			  _i = 0, _len = vs.length;
-			  function _step() {
-				_i++;
-				_body();
-			  };
-			  function _body() {
-				if (_i < _len) {
-				  v = vs[_i];
-				  x(function(_$$_2) {
-					_$res$_1.push(_$$_2);
-					_step(a, b);
-				  });
-				} else {
-				  _done();
-				}
-			  };
-			  function _done() {
-				_$cb$_0(_$res$_1);
-			  };
-			  _body();
-			  function _$cb$_0() {
-				a = arguments[0];
-				autocb(a, b);
-			  };
-			});
+          (function(autocb) {
+            var a, b, v, _$res$_1, _i, _len,
+              _this = this;
+            _$res$_1 = [];
+            _i = 0, _len = vs.length;
+            function _step() {
+              _i++;
+              _body();
+            };
+            function _body() {
+              if (_i < _len) {
+                v = vs[_i];
+                x(function(_$$_2) {
+                  _step(_$res$_1.push(_$$_2));
+                });
+              } else {
+                _done();
+              }
+            };
+            function _done() {
+              _$cb$_0(_$res$_1);
+            };
+            _body();
+            function _$cb$_0() {
+              a = arguments[0];
+              autocb(a, b);
+            };
+          });
 		"""

@@ -392,33 +392,6 @@ class exports.Rewriter
         return 1
       return 1
 
-  rewriteAsync: ->
-    dest = []
-    {tokens} = @
-    while token = tokens.shift()
-      if token[0] == 'IDENTIFIER' && token[1].slice(-1) == '!'
-        line = token[2]
-        token[1] = token[1].slice(0,-1)
-        tag_async = ['ASYNC', 'async', line]
-        tag_cs = ['CALL_START', '(', line]
-        tag_ce = ['CALL_END', ')', line]
-        dest.push token
-        dest.push tag_async
-        if tokens[0]?[0] != 'CALL_START'
-          dest.push tag_cs
-          dest.push tag_ce
-      else if token[0] == 'ASYNC' && tokens[0]?[0] != 'CALL_START'
-        line = token[2]
-        tag_cs = ['CALL_START', '(', line]
-        tag_ce = ['CALL_END', ')', line]
-        dest.push token
-        dest.push tag_cs
-        dest.push tag_ce
-      else
-        dest.push token
-
-    @tokens = dest
-
 
   # Tag postfix conditionals as such, so that we can parse them with a
   # different precedence.
@@ -453,6 +426,27 @@ class exports.Rewriter
 
   # Look up a tag by token index.
   tag: (i) -> @tokens[i]?[0]
+
+  rewriteAsync: ->
+    dest = []
+    {tokens} = @
+    while token = tokens.shift()
+      if token[0] in ['IDENTIFIER', 'PROPERTY'] && token[1].slice(-1) == '!'
+        line = token[2]
+        token[1] = token[1].slice(0,-1)
+        if tokens[0]?[0] in ['=', ':']
+          dest.push token
+          dest.push tokens.shift()
+          dest.push ['AUTOCBFN', 'autocbfn', line]
+          continue
+        dest.push token
+        dest.push ['ASYNC', 'async', line]
+        if tokens[0]?[0] != 'CALL_START'
+          dest.push ['CALL_START', '(', line]
+          dest.push ['CALL_END', ')', line]
+      else
+        dest.push token
+    @tokens = dest
 
 # Constants
 # ---------

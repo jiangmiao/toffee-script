@@ -115,6 +115,7 @@ grammar =
     o 'AsyncValue'
     o 'Invocation'
     o 'Code'
+    o 'AutocbCode'
     o 'Operation'
     o 'Assign'
     o 'If'
@@ -203,6 +204,10 @@ grammar =
   Code: [
     o 'PARAM_START ParamList PARAM_END FuncGlyph Block', -> new Code $2, $5, $4
     o 'FuncGlyph Block',                        -> new Code [], $2, $1
+  ]
+
+  AutocbCode: [
+    o 'AUTOCBFN Code',                          -> new AutocbCode $2
   ]
 
   # CoffeeScript has two different symbols for functions. `->` is for ordinary

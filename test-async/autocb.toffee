@@ -150,4 +150,13 @@ describe 'autocb', ->
 			  };
 			});
 		"""
+	it 'autocbfn', ->
+		code_eq """
+			coundown! = (n) ->
+				n
+		""", """
+			function coundown(n, autocb) {
+			  autocb(n);
+			};
+		"""
 

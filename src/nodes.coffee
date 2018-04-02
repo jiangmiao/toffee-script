@@ -1773,6 +1773,11 @@ exports.Code = class Code extends Base
     @body.move()
     @
 
+exports.AutocbCode = class AutocbCode extends Code
+  constructor: ({params, body, tag}) ->
+    params.push new AutocbParam []
+    super(params, body, tag)
+
 #### Param
 
 # A parameter in a function definition. Beyond a typical Javascript parameter,

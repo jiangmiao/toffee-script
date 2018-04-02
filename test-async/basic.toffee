@@ -2,25 +2,15 @@
 describe 'basic', ->
 	it 'simple', ->
 		code_eq "x!", """
-			var _this = this;
-			x(function(v){return v})
+            var _this = this; x(function(_$$_0) { return _$$_0; });
 		"""
-
 	it 'with returns', ->
 		code_eq "y = x!", """
-			var y
-			x(function() {
-				return y = arguments[0]
-			})
+            var y, _this = this; x(function() { return y = arguments[0]; });
 		"""
 
 	it 'full feature', ->
 		code_eq "x, y = a! b, c", """
-			var x, y
-			a(b, c, function() {
-				x = arguments[0]
-				y = arguments[1]
-				return x
-			})
+            var x, y, _this = this; a(b, c, function() { return x = arguments[0], y = arguments[1], x; });
 		"""
 

@@ -10,6 +10,7 @@ UglifyJS = require('uglify-js');
 p = console.log;
 
 strip = function(code) {
+  return code.replace(/\s+/g, ' ').trim()
   var ast, compressor;
   ast = UglifyJS.parse(code);
   ast.figure_out_scope();
@@ -34,9 +35,9 @@ code_eq = function(src_orig, dest_orig) {
     e = _error;
     console.log("<<<< src_orig");
     console.log(src_orig);
-    console.log('---- \x1b[32msrc_gened\x1b[0m');
+    console.log('---- \x1b[32msrc\x1b[0m');
     console.log(src_gened);
-    console.log("---- dest_wrapped");
+    console.log("---- dest");
     console.log(dest_wrapped);
     console.log(">>>>");
     throw e;

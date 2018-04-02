@@ -224,25 +224,26 @@ describe 'switch', ->
 					c!
 			null
 		""", """
-			var _this = this;
+          var _this = this;
 
-			switch (x) {
-			  case 'a':
-				_$cb$_0(a());
-				break;
-			  case 'b':
-				b(function(_$$_1) {
-				  _$cb$_0(_$$_1);
-				});
-				break;
-			  default:
-				c(function(_$$_2) {
-				  _$cb$_0(_$$_2);
-				});
-			}
-			function _$cb$_0() {
-			  return null;
-			};
+          switch (x) {
+            case 'a':
+              _$cb$_0(a());
+              break;
+            case 'b':
+              b(function(_$$_1) {
+                _$cb$_0(_$$_1);
+              });
+              break;
+            default:
+              c(function(_$$_2) {
+                _$cb$_0(_$$_2);
+              });
+          }
+          function _$cb$_0() {
+            return null;
+          };
+
 
 		"""
 	it 'sync otherwise', ->
@@ -256,25 +257,25 @@ describe 'switch', ->
 					d
 			null
 		""", """
-			var _this = this;
+          var _this = this;
+          switch (a) {
+            case b:
+              b(function(_$$_1) {
+                _$cb$_0(_$$_1);
+              });
+              break;
+            case c:
+              a(function(_$$_2) {
+                _$cb$_0(_$$_2);
+              });
+              break;
+            default:
+              _$cb$_0(d);
+          }
+          function _$cb$_0() {
+            return null;
+          };
 
-			switch (a) {
-			  case b:
-				b(function(_$$_2) {
-				  _$cb$_0(_$$_2);
-				});
-				break;
-			  case c:
-				a(function(_$$_3) {
-				  _$cb$_0(_$$_3);
-				});
-				break;
-			  default:
-				_$cb$_0(d);
-			}
-			function _$cb$_0(_$$_1) {
-			  return null;
-			};
 		"""
 
 	it 'ends with if', ->
